@@ -1,0 +1,103 @@
+#include <iostream> 
+#include <string>
+
+using namespace std;
+
+int number = -1;
+const int threshold = 100;
+
+
+class Error{
+	 	public:
+		 	string str;
+			Error(string text){
+				 str = text;
+			}
+};
+
+
+ size_t qualifier(string str){
+ 	if (str == "add") return 1;
+	if (str == "get") return 2;
+	if (str == "del") return 3;
+	
+}
+
+
+ void add(int* p, int data){
+	 setlocale(LC_ALL, "rus");
+		 	if (number >= threshold)
+		 		throw Error("Ошибка. Места больше нет.");
+	 	++number;
+	 	p[number] = data;
+	
+		
+}
+
+
+ int get(int* p){
+		if (number == -1)
+			setlocale(LC_ALL, "rus");
+			throw Error("Пусто.");
+	 	return p[number];
+	
+}
+
+
+ void del(){
+	 	if (number == -1)
+			throw Error("Пусто.");
+	 	--number;
+	
+}
+
+
+ int main(){
+	 size_t n;
+	 int array[threshold];
+	 setlocale(LC_ALL, "rus");
+	 cin >> n;
+	 cout << "Выбирите операцию : " << std::endl;
+
+	 for (size_t i = 0; i < n; i++){
+		 int data;
+
+		 string str;
+		 cin >> str;
+
+		 switch (qualifier(str)){
+	case 1:
+			 cin >> data;
+			 try{
+				 add(array, data);
+
+			 }
+			 catch (Error& e){
+				 cout << e.str << endl;
+
+			 }
+			 break;
+	case 2:
+			 try{
+				 cout << get(array) << endl;
+
+			 }
+			 catch (Error& e){
+				 cout << e.str << endl;
+
+			 }
+			 break;
+	case 3:
+			 try{
+				 del();
+
+			 }
+			 catch (Error& e){
+				 cout << e.str << endl;
+
+			 }
+			 break;
+		}
+	 }
+	 return 0;
+ }
